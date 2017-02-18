@@ -1,7 +1,7 @@
 
 `burrp` : Tools to Import and Process [PortSwigger](https://portswigger.net/) 'Burp' Proxy Data
 
-The Burp proxy is a web application and security testing tools. It intercepts, records and can even transform browsaer traffic.
+The Burp Suite is a set of web application and security testing tools. Combined, they intercept, record and can even transform browser traffic.
 
 For now, the solo function - `read_burp` - expects the `request` and `response` elements of a Burp XML export file to be base 64 encoded.
 
@@ -67,7 +67,7 @@ library(testthat)
 date()
 ```
 
-    ## [1] "Sat Feb 18 15:55:06 2017"
+    ## [1] "Sat Feb 18 16:05:25 2017"
 
 ``` r
 test_dir("tests/")
