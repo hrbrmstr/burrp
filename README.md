@@ -7,6 +7,8 @@ For now, the solo function - `read_burp` - expects the `request` and `response` 
 
 Eventually the `request` and `response` objects will be turned into `httr` compatible objects and there will be and an `as_har()` function to turn the entire structure into a `HARtools` object.
 
+To use this package you either need to have Burp proxy export files handy, use the built-in example data file or [download Burp](https://portswigger.net/burp/) and capture some web traffic and export the data.
+
 The following functions are implemented:
 
 -   `read_burp` Read in a Burp proxy XML export file
@@ -65,7 +67,7 @@ library(testthat)
 date()
 ```
 
-    ## [1] "Sat Feb 18 15:52:18 2017"
+    ## [1] "Sat Feb 18 15:55:06 2017"
 
 ``` r
 test_dir("tests/")
