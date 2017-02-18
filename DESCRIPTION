@@ -1,0 +1,23 @@
+Package: burrp
+Type: Package
+Title: Tools to Import and Process 'PortSwigger' 'Burp' Proxy Data
+Version: 0.1.0
+Date: 2017-02-18
+Author: Bob Rudis (bob@rud.is)
+Maintainer: Bob Rudis <bob@rud.is>
+Description: burrpTools to Import and Process 'PortSwigger' 'Burp' Proxy Data
+URL: http://github.com/hrbrmstr/burrp
+BugReports: https://github.com/hrbrmstr/burrp/issues
+License: AGPL
+Suggests:
+    testthat
+Depends:
+    R (>= 3.2.0)
+Imports:
+    purrr,
+    xml2,
+    tibble,
+    openssl,
+    httr,
+    dplyr
+RoxygenNote: 6.0.0

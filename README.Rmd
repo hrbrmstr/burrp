@@ -1,0 +1,51 @@
+---
+output: rmarkdown::github_document
+---
+
+`burrp` : Tools to Import and Process [PortSwigger](https://portswigger.net/) 'Burp' Proxy Data
+
+The Burp proxy is a web application and security testing tools. It intercepts, records and can even transform browsaer traffic.
+
+For now, the solo function - `read_burp` - expects the `request` and `response` elements of a Burp XML export file to be base 64 encoded.
+
+Eventually the `request` and `response` objects will be turned into `httr` compatible objects and there will be and an `as_har()` function to turn the entire structure into a `HARtools` object.
+
+The following functions are implemented:
+
+- `read_burp`	Read in a Burp proxy XML export file
+
+### Installation
+
+```{r eval=FALSE}
+devtools::install_github("hrbrmstr/burrp")
+```
+
+```{r message=FALSE, warning=FALSE, error=FALSE}
+options(width=120)
+```
+
+### Usage
+
+```{r message=FALSE, warning=FALSE, error=FALSE}
+library(burrp)
+library(dplyr)
+
+# current verison
+packageVersion("burrp")
+
+system.file("extdata", "burp.xml", package="burrp") %>%
+  read_burp() %>%
+  glimpse()
+```
+
+### Test Results
+
+```{r message=FALSE, warning=FALSE, error=FALSE}
+library(burrp)
+library(testthat)
+
+date()
+
+test_dir("tests/")
+```
+
