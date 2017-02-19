@@ -14,10 +14,17 @@ Suggests:
 Depends:
     R (>= 3.2.0)
 Imports:
-    purrr,
-    xml2,
-    tibble,
+    magrittr,
+    anytime,
     openssl,
+    stringi,
+    tibble,
+    dplyr,
+    purrr,
+    readr,
+    stats,
     httr,
-    dplyr
+    xml2,
+    Rcpp
 RoxygenNote: 6.0.0
+LinkingTo: Rcpp

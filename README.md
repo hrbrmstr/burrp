@@ -5,9 +5,11 @@ The Burp Suite is a set of web application and security testing tools. Combined,
 
 For now, the solo function - `read_burp` - expects the `request` and `response` elements of a Burp XML export file to be base 64 encoded.
 
-Eventually the `request` and `response` objects will be turned into `httr` compatible objects and there will be and an `as_har()` function to turn the entire structure into a `HARtools` object.
+Eventually the `request` object will be turned into an `httr` compatible object and there will likely be and an `as_har()` function to turn the entire structure into a `HARtools` object.
 
 To use this package you either need to have Burp proxy export files handy, use the built-in example data file or [download Burp](https://portswigger.net/burp/) and capture some web traffic and export the data.
+
+The current Burp proxy example capture file is of a capture from the 🍊 "news survey" and was used solely out of convenience (was making sure it actually POSTed formn data). It will be subbed out for something much less depressing at some point.
 
 The following functions are implemented:
 
@@ -37,8 +39,9 @@ packageVersion("burrp")
 
 ``` r
 system.file("extdata", "burp.xml", package="burrp") %>%
-  read_burp() %>%
-  glimpse()
+  read_burp() -> burp_df
+
+glimpse(burp_df)
 ```
 
     ## Observations: 132
@@ -55,8 +58,29 @@ system.file("extdata", "burp.xml", package="burrp") %>%
     ## $ status         <chr> "200", "200", "200", "200", "200", "200", "200", "200", "200", "", "", "200", "200", "", "20...
     ## $ responselength <dbl> 53953, 1210, 93988, 6515, 21669, 84091, 6713, 1890, 39936, NA, NA, 43553, 385, NA, 903, 914,...
     ## $ mimetype       <chr> "HTML", "script", "script", "script", "script", "script", "script", "script", "script", "", ...
-    ## $ response       <list> [<48, 54, 54, 50, 2f, 31, 2e, 31, 20, 32, 30, 30, 20, 4f, 4b, 0d, 0a, 44, 61, 74, 65, 3a, 2...
+    ## $ response       <list> [<https://action.trump2016.com/trump-mms-survey/, 200, Sat, 18 Feb 2017 19:56:26 GMT, text/...
     ## $ comment        <chr> "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ...
+
+``` r
+burp_df$response[[1]]
+```
+
+    ## Response [https://action.trump2016.com/trump-mms-survey/]
+    ##   Date: 2017-02-18 14:56
+    ##   Status: 200
+    ##   Content-Type: text/html; charset=utf-8
+    ##   Size: 53.2 kB
+    ## 
+    ## 
+    ## <!DOCTYPE html>
+    ## <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+    ## <!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+    ## <!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+    ## <!--[if gt IE 8]><!-->
+    ## <html lang="en"><!--<![endif]-->
+    ##  <head>
+    ##      <!-- Adobe Dynamic Tag -->
+    ## ...
 
 ### Test Results
 
@@ -67,7 +91,7 @@ library(testthat)
 date()
 ```
 
-    ## [1] "Sat Feb 18 16:05:25 2017"
+    ## [1] "Sun Feb 19 06:42:07 2017"
 
 ``` r
 test_dir("tests/")
