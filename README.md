@@ -9,7 +9,7 @@ Eventually the `request` object will be turned into an `httr` compatible object 
 
 To use this package you either need to have Burp proxy export files handy, use the built-in example data file or [download Burp](https://portswigger.net/burp/) and capture some web traffic and export the data.
 
-The current Burp proxy example capture file is of a capture from the 🍊 "news survey" and was used solely out of convenience (was making sure it actually POSTed formn data). It will be subbed out for something much less depressing at some point.
+The current Burp proxy example capture file is of a capture from the 🍊 "news survey" and was used solely out of convenience (was making sure it actually POSTed formndata). It will be subbed out for something much less depressing at some point.
 
 The following functions are implemented:
 
@@ -91,7 +91,7 @@ library(testthat)
 date()
 ```
 
-    ## [1] "Sun Feb 19 06:42:07 2017"
+    ## [1] "Sun Feb 19 06:49:39 2017"
 
 ``` r
 test_dir("tests/")
