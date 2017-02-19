@@ -3,9 +3,8 @@
 #' For now, this function expects the `request` and `response`
 #' elements to be base 64 encoded.
 #'
-#' Eventually the `request` object will be turned into an `httr`
-#' compatible object and there will likely be and an `as_har()`
-#' function to turn the entire structure into a `HARtools` object.
+#' Eventually there will likely be an `as_har()` function to turn the
+#' entire structure into a `HARtools` object.
 #'
 #' @md
 #' @param burp_file path to a Burp proxy XML export file
@@ -13,6 +12,10 @@
 #'        and [httr::response] object. If the `response` record cannot
 #'        be turned into an [httr::response] object a warning will
 #'        be issued and the raw `response` record will be returned.
+#' @param convert_request if `TRUE`, turn the `request` record into
+#'        and [httr::request] object. If the `request` record cannot
+#'        be turned into an [httr::request] object a warning will
+#'        be issued and the raw `request` record will be returned.
 #' @return a `tibble`
 #' @export
 #' @examples
@@ -21,7 +24,7 @@
 #' system.file("extdata", "burp.xml", package="burrp") %>%
 #'   read_burp() %>%
 #'   glimpse()
-read_burp <- function(burp_file, convert_response=TRUE) {
+read_burp <- function(burp_file, convert_response=TRUE, convert_request=TRUE) {
 
   burp_file <- normalizePath(path.expand(burp_file))
 
@@ -43,6 +46,10 @@ read_burp <- function(burp_file, convert_response=TRUE) {
 
   if (convert_response) {
     burp_df <- mutate(burp_df, response=pmap(list(response, url, time), make_response))
+  }
+
+  if (convert_request) {
+    burp_df <- mutate(burp_df, request=pmap(list(request, url, time), make_request))
   }
 
   burp_df

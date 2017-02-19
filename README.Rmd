@@ -8,11 +8,11 @@ The Burp Suite is a set of web application and security testing tools. Combined,
 
 For now, the solo function - `read_burp` - expects the `request` and `response` elements of a Burp XML export file to be base 64 encoded.
 
-Eventually the `request` object will be turned into an `httr` compatible object and there will likely be and an `as_har()` function to turn the entire structure into a `HARtools` object.
+Eventually there will likely be an `as_har()` function to turn the entire structure into a `HARtools` object.
 
 To use this package you either need to have Burp proxy export files handy, use the built-in example data file or [download Burp](https://portswigger.net/burp/) and capture some web traffic and export the data.
 
-The current Burp proxy example capture file is of a capture from the 🍊 "news survey" and was used solely out of convenience (was making sure it actually POSTed formndata). It will be subbed out for something much less depressing at some point.
+The current Burp proxy example capture file is of a capture from the :orange: "news survey" and was used solely out of convenience (was making sure it actually POSTed formndata). It will be subbed out for something much less depressing at some point.
 
 The following functions are implemented:
 
@@ -42,7 +42,9 @@ system.file("extdata", "burp.xml", package="burrp") %>%
 
 glimpse(burp_df)
 
-burp_df$response[[1]]
+burp_df$response[[42]]
+
+burp_df$request[[42]]
 ```
 
 ### Test Results

@@ -4,7 +4,7 @@
 \alias{read_burp}
 \title{Read in a Burp proxy XML export file}
 \usage{
-read_burp(burp_file, convert_response = TRUE)
+read_burp(burp_file, convert_response = TRUE, convert_request = TRUE)
 }
 \arguments{
 \item{burp_file}{path to a Burp proxy XML export file}
@@ -13,6 +13,11 @@ read_burp(burp_file, convert_response = TRUE)
 and \link[httr:response]{httr::response} object. If the \code{response} record cannot
 be turned into an \link[httr:response]{httr::response} object a warning will
 be issued and the raw \code{response} record will be returned.}
+
+\item{convert_request}{if \code{TRUE}, turn the \code{request} record into
+and \link[httr:request]{httr::request} object. If the \code{request} record cannot
+be turned into an \link[httr:request]{httr::request} object a warning will
+be issued and the raw \code{request} record will be returned.}
 }
 \value{
 a \code{tibble}
@@ -22,9 +27,8 @@ For now, this function expects the \code{request} and \code{response}
 elements to be base 64 encoded.
 }
 \details{
-Eventually the \code{request} object will be turned into an \code{httr}
-compatible object and there will likely be and an \code{as_har()}
-function to turn the entire structure into a \code{HARtools} object.
+Eventually there will likely be an \code{as_har()} function to turn the
+entire structure into a \code{HARtools} object.
 }
 \examples{
 library(dplyr)

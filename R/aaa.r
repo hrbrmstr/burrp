@@ -1,1 +1,1 @@
-globalVariables(c("time", "request", "response", "responselength", "url"))
+globalVariables(c("time", "request", "response", "responselength", "url", "time"))
