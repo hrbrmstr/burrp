@@ -10,13 +10,13 @@ read_burp(burp_file, convert_response = TRUE, convert_request = TRUE)
 \item{burp_file}{path to a Burp proxy XML export file}
 
 \item{convert_response}{if \code{TRUE}, turn the \code{response} record into
-and \link[httr:response]{httr::response} object. If the \code{response} record cannot
-be turned into an \link[httr:response]{httr::response} object a warning will
+and \code{httr} \code{response} object. If the \code{response} record cannot
+be turned into an \code{httr} \code{response} object a warning will
 be issued and the raw \code{response} record will be returned.}
 
 \item{convert_request}{if \code{TRUE}, turn the \code{request} record into
-and \link[httr:request]{httr::request} object. If the \code{request} record cannot
-be turned into an \link[httr:request]{httr::request} object a warning will
+and \code{httr} \code{request} object. If the \code{request} record cannot
+be turned into an \code{httr} \code{request} object a warning will
 be issued and the raw \code{request} record will be returned.}
 }
 \value{

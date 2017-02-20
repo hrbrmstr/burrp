@@ -16,7 +16,14 @@ The current Burp proxy example capture file is of a capture from the [Bloomberg 
 
 The following functions are implemented:
 
-- `read_burp`	Read in a Burp proxy XML export file
+- `read_burp`:	Read in a Burp proxy XML export file
+- `find_sequence`:	Find the first occurrence (if any) of a sequence of raw bytes ('pattern') in 'buffer'
+- `extension_is`:	Functional helpers
+- `method_is`:	Functional helpers
+- `mime_is`:	Functional helpers
+- `port_is`:	Functional helpers
+- `protocol_is`:	Functional helpers
+- `status_is`:	Functional helpers
 
 ### Installation
 
@@ -65,6 +72,8 @@ content(burp_df$response[[3]], simplifyDataFrame=TRUE) %>%
        caption="Source: Bloomberg <https://www.bloomberg.com/graphics/2014-hottest-year-on-record/>") +
   theme_ipsum_rc(grid="XY", axis="xy") +
   theme(legend.position="none")
+
+summary(burp_df)
 ```
 
 ### Test Results

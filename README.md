@@ -13,7 +13,14 @@ The current Burp proxy example capture file is of a capture from the [Bloomberg 
 
 The following functions are implemented:
 
--   `read_burp` Read in a Burp proxy XML export file
+-   `read_burp`: Read in a Burp proxy XML export file
+-   `find_sequence`: Find the first occurrence (if any) of a sequence of raw bytes ('pattern') in 'buffer'
+-   `extension_is`: Functional helpers
+-   `method_is`: Functional helpers
+-   `mime_is`: Functional helpers
+-   `port_is`: Functional helpers
+-   `protocol_is`: Functional helpers
+-   `status_is`: Functional helpers
 
 ### Installation
 
@@ -112,6 +119,45 @@ content(burp_df$response[[3]], simplifyDataFrame=TRUE) %>%
 
 ![](README_files/figure-markdown_github/unnamed-chunk-3-1.png)
 
+``` r
+summary(burp_df)
+```
+
+    ## <Burp Proxy Export>
+    ## - 15 total records
+    ## 
+    ## # A tibble: 2 × 3
+    ##   status       description     n
+    ##    <chr>             <chr> <int>
+    ## 1    200                OK    14
+    ## 2    301 Moved Permanently     1
+    ## 
+    ## # A tibble: 2 × 2
+    ##    port     n
+    ##   <chr> <int>
+    ## 1   443    14
+    ## 2    80     1
+    ## 
+    ## # A tibble: 2 × 2
+    ##   protocol     n
+    ##      <chr> <int>
+    ## 1    https    14
+    ## 2     http     1
+    ## 
+    ## # A tibble: 1 × 2
+    ##   method     n
+    ##    <chr> <int>
+    ## 1    GET    15
+    ## 
+    ## # A tibble: 5 × 2
+    ##   extension     n
+    ##       <chr> <int>
+    ## 1        js     9
+    ## 2      null     2
+    ## 3       svg     2
+    ## 4      html     1
+    ## 5      json     1
+
 ### Test Results
 
 ``` r
@@ -121,7 +167,7 @@ library(testthat)
 date()
 ```
 
-    ## [1] "Sun Feb 19 21:05:42 2017"
+    ## [1] "Sun Feb 19 23:05:39 2017"
 
 ``` r
 test_dir("tests/")
