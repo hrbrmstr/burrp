@@ -21,7 +21,7 @@
 #' @examples
 #' library(dplyr)
 #'
-#' system.file("extdata", "burp.xml", package="burrp") %>%
+#' system.file("extdata", "hottest_year.xml", package="burrp") %>%
 #'   read_burp() %>%
 #'   glimpse()
 read_burp <- function(burp_file, convert_response=TRUE, convert_request=TRUE) {

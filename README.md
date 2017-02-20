@@ -9,7 +9,7 @@ Eventually there will likely be an `as_har()` function to turn the entire struct
 
 To use this package you either need to have Burp proxy export files handy, use the built-in example data file or [download Burp](https://portswigger.net/burp/) and capture some web traffic and export the data.
 
-The current Burp proxy example capture file is of a capture from the :orange: "news survey" and was used solely out of convenience (was making sure it actually POSTed formndata). It will be subbed out for something much less depressing at some point.
+The current Burp proxy example capture file is of a capture from the [Bloomberg Hottest Year on Record](https://www.bloomberg.com/graphics/2014-hottest-year-on-record/) scrollytelling datavis. It's a good example of how to use Burp to capture requests as you interactively work in a browser (you can get the JSON data behind the vis this way, too).
 
 The following functions are implemented:
 
@@ -21,15 +21,13 @@ The following functions are implemented:
 devtools::install_github("hrbrmstr/burrp")
 ```
 
-``` r
-options(width=120)
-```
-
 ### Usage
 
 ``` r
+library(httr)
 library(burrp)
-library(dplyr)
+library(hrbrthemes) # github
+library(tidyverse)
 
 # current verison
 packageVersion("burrp")
@@ -38,71 +36,81 @@ packageVersion("burrp")
     ## [1] '0.1.0'
 
 ``` r
-system.file("extdata", "burp.xml", package="burrp") %>%
+system.file("extdata", "hottest_year.xml", package="burrp") %>%
   read_burp() -> burp_df
 
 glimpse(burp_df)
 ```
 
-    ## Observations: 132
+    ## Observations: 15
     ## Variables: 14
-    ## $ time           <dttm> 2017-02-18 14:56:24, 2017-02-18 14:56:25, 2017-02-18 14:56:25, 2017-02-18 14:56:25, 2017-02...
-    ## $ url            <chr> "https://action.trump2016.com/trump-mms-survey/", "https://wurfl.io/wurfl.js", "https://asse...
-    ## $ host           <chr> "action.trump2016.com", "wurfl.io", "assets.adobedtm.com", "prod-cdn-static.gop.com", "prod-...
-    ## $ port           <chr> "443", "443", "443", "443", "443", "443", "443", "443", "443", "443", "443", "443", "443", "...
+    ## $ time           <dttm> 2017-02-19 20:42:20, 2017-02-19 20:42:18, 2017-02-19 20:42:20, 2017-02-19 20:42:20, 2017-02...
+    ## $ url            <chr> "https://connect.facebook.net/en_US/all.js", "https://www.bloomberg.com/graphics/2014-hottes...
+    ## $ host           <chr> "connect.facebook.net", "www.bloomberg.com", "www.bloomberg.com", "www.bloomberg.com", "www....
+    ## $ port           <chr> "443", "443", "443", "443", "443", "443", "443", "443", "443", "443", "443", "443", "80", "4...
     ## $ protocol       <chr> "https", "https", "https", "https", "https", "https", "https", "https", "https", "https", "h...
     ## $ method         <chr> "GET", "GET", "GET", "GET", "GET", "GET", "GET", "GET", "GET", "GET", "GET", "GET", "GET", "...
-    ## $ path           <chr> "/trump-mms-survey/", "/wurfl.js", "/ccb66fd3556ba80512894ddaac0f1024ce58d90d/satelliteLib-8...
-    ## $ extension      <chr> "null", "js", "js", "js", "js", "js", "js", "js", "js", "js", "null", "js", "null", "null", ...
-    ## $ request        <list> [<GET, https://action.trump2016.com/trump-mms-survey/, action.trump2016.com, Mozilla/5.0 (M...
-    ## $ status         <chr> "200", "200", "200", "200", "200", "200", "200", "200", "200", "", "", "200", "200", "", "20...
-    ## $ responselength <dbl> 53953, 1210, 93988, 6515, 21669, 84091, 6713, 1890, 39936, NA, NA, 43553, 385, NA, 903, 914,...
-    ## $ mimetype       <chr> "HTML", "script", "script", "script", "script", "script", "script", "script", "script", "", ...
-    ## $ response       <list> [<https://action.trump2016.com/trump-mms-survey/, 200, Sat, 18 Feb 2017 19:56:26 GMT, text/...
-    ## $ comment        <chr> "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ...
+    ## $ path           <chr> "/en_US/all.js", "/graphics/2014-hottest-year-on-record/", "/graphics/2014-hottest-year-on-r...
+    ## $ extension      <chr> "js", "null", "json", "svg", "svg", "js", "js", "js", "js", "js", "js", "js", "null", "html"...
+    ## $ request        <list> [<GET, https://connect.facebook.net/en_US/all.js, connect.facebook.net, Mozilla/5.0 (Macint...
+    ## $ status         <chr> "200", "200", "200", "200", "200", "200", "200", "200", "200", "200", "200", "200", "301", "...
+    ## $ responselength <dbl> 197770, 46838, 49141, 4264, 3812, 3116, 12571, 147196, 19182, 1101, 4993, 14939, 884, 1663, 474
+    ## $ mimetype       <chr> "script", "HTML", "JSON", "XML", "XML", "script", "script", "script", "script", "script", "s...
+    ## $ response       <list> [<https://connect.facebook.net/en_US/all.js, 200, X-FB-Content-MD5, 54d8ccb495d0adf5b0de286...
+    ## $ comment        <chr> "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
 
 ``` r
-burp_df$response[[42]]
-```
-
-    ## Response [https://action.trump2016.com/survey/trump-mms-survey/]
-    ##   Date: 2017-02-18 14:56
-    ##   Status: 302
-    ##   Content-Type: text/html
-    ##   Size: 154 B
-    ## <html>
-    ## <head><title>302 Found</title></head>
-    ## <body bgcolor="white">
-    ## <center><h1>302 Found</h1></center>
-    ## <hr><center>nginx</center>
-    ## </body>
-    ## </html>
-
-``` r
-burp_df$request[[42]]
+burp_df$request[[3]]
 ```
 
     ## <request>
-    ## POST https://action.trump2016.com/survey/trump-mms-survey/
+    ## GET https://www.bloomberg.com/graphics/2014-hottest-year-on-record/data.json
     ## Output: list
     ## Options:
     ## * useragent: NULL
-    ## * post: TRUE
-    ## * postfieldsize: 247
-    ## * postfields: as.raw(c(0x63, 0x73, 0x72, 0x66, 0x6d, 0x69, 0x64, 0x64, 0x6c, 0x65, 0x77, 0x61, 0x72, 0x65, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x3d, 0x67, 0x76, 0x71, 0x36, 0x61, 0x6e, 0x32, 0x76, 0x6a, 0x49, 0x6a, 0x37, 0x56, 0x4e, 0x72, 0x38, 0x71, 0x56, 0x58, 0x73, 0x59, 0x61, 0x48, 0x35, 0x52, 0x48, 0x32, 0x4c, 0x41, 0x4e, 0x32, 0x57, 0x26, 0x66, 0x75, 0x6c, 0x6c, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x3d, 0x45, 0x78, 0x2b, 0x41, 0x6d, 0x70, 0x6c, 0x65, 0x26, 0x66, 0x69, 0x72, 0x73, 0x74, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 
-    ## 0x3d, 0x45, 0x78, 0x26, 0x6c, 0x61, 0x73, 0x74, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x3d, 0x41, 0x6d, 0x70, 0x6c, 0x65, 0x26, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x3d, 0x65, 0x78, 0x61, 0x6d, 0x70, 0x6c, 0x65, 0x25, 0x34, 0x30, 0x65, 0x78, 0x61, 0x6d, 0x70, 0x6c, 0x65, 0x2e, 0x63, 0x6f, 0x6d, 0x26, 0x70, 0x6f, 0x73, 0x74, 0x61, 0x6c, 0x5f, 0x63, 0x6f, 0x64, 0x65, 0x3d, 0x31, 0x30, 0x31, 0x31, 0x32, 0x26, 0x73, 0x76, 0x69, 0x64, 0x3d, 0x32, 0x36, 0x30, 0x26, 0x75, 0x74, 0x6d, 0x5f, 0x73, 0x6f, 0x75, 0x72, 0x63, 
-    ## 0x65, 0x3d, 0x4e, 0x41, 0x26, 0x75, 0x74, 0x6d, 0x5f, 0x6d, 0x65, 0x64, 0x69, 0x75, 0x6d, 0x3d, 0x4e, 0x41, 0x26, 0x75, 0x74, 0x6d, 0x5f, 0x63, 0x61, 0x6d, 0x70, 0x61, 0x69, 0x67, 0x6e, 0x3d, 0x4e, 0x41, 0x26, 0x75, 0x74, 0x6d, 0x5f, 0x63, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x3d, 0x4e, 0x41, 0x26, 0x61, 0x64, 0x5f, 0x66, 0x6c, 0x69, 0x67, 0x68, 0x74, 0x3d, 0x4e, 0x41, 0x26, 0x69, 0x6c, 0x69, 0x73, 0x74, 0x3d, 0x26, 0x70, 0x67, 0x74, 0x79, 0x70, 0x65, 0x3d, 0x4e, 0x6f, 0x6e, 0x65))
+    ## * post: FALSE
+    ## * postfieldsize: 2
+    ## * postfields: as.raw(c(0x00, 0x0a))
     ## Headers:
-    ## * host: action.trump2016.com
+    ## * host: www.bloomberg.com
     ## * user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:51.0) Gecko/20100101 Firefox/51.0
-    ## * accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+    ## * accept: application/json,*/*
     ## * accept-language: en-US,en;q=0.5
-    ## * referer: https://action.trump2016.com/trump-mms-survey/
-    ## * cookie: __cfduid=de45b7c712d9e09399136484dfeb6b9d21487447785; csrftoken=gvq6an2vjIj7VNr8qVXsYaH5RH2LAN2W; AMCV_4B3221AA564EF52E7F000101%40AdobeOrg=-1248264605%7CMCIDTS%7C17216%7CMCMID%7C85869963419843325149068145715167308571%7CMCAID%7CNONE%7CMCOPTOUT-1487454987s%7CNONE; mbox=check#true#1487447847|session#1487447786118-518973#1487449647|PC#1487447786118-518973.17_51#1488657388; AMCVS_4B3221AA564EF52E7F000101%40AdobeOrg=1; s_cc=true; csid=403416338; __distillery=ee70bea_bd0693e8-7d09-4ca1-a3bb-e3e383878f49-289c85faf-a35ed3cb44cc-3a4d; s_fid=0DF70C89B5017746-32311BBD9287A0D2; s_sq=gopdjtlive%3D%2526c.%2526a.%2526activitymap.%2526page%253Dhttps%25253A%25252F%25252Faction.trump2016.com%25252Ftrump-mms-survey%25252F%2526link%253DSubmit%2526region%253Dsurvey-form%2526.activitymap%2526.a%2526.c
+    ## * referer: https://www.bloomberg.com/graphics/2014-hottest-year-on-record/
+    ## * cookie: SRV=YPX01; ak_rg=US; ak_co=US; GRAPHICS_AP=ny04; bdfpc=null
     ## * connection: close
-    ## * upgrade-insecure-requests: 1
-    ## * content-type: application/x-www-form-urlencoded
-    ## * content-length: 247
+
+``` r
+burp_df$response[[3]]
+```
+
+    ## Response [https://www.bloomberg.com/graphics/2014-hottest-year-on-record/data.json]
+    ##   Date: 2017-02-19 20:42
+    ##   Status: 200
+    ##   Content-Type: application/json
+    ##   Size: 48.7 kB
+
+``` r
+content(burp_df$response[[3]], simplifyDataFrame=TRUE) %>% 
+  unnest() %>% 
+  filter(key != "0") %>% 
+  mutate(key=factor(key, levels=as.character(1:12), labels=month.abb)) %>% 
+  mutate(color=ifelse(year=="2014", "#cb181d", "#b5b5b5")) %>% 
+  mutate(size=ifelse(year=="2014", 0.5, 0.15)) %>% 
+  ggplot(aes(key, value, group=year, color=color, size=size)) +
+  geom_hline(yintercept = 0, size=0.2) +
+  geom_line() +
+  scale_x_discrete(expand=c(0,0)) +
+  scale_y_continuous(breaks=c(-1, 0, 1), labels=c("-1°F", "20th Century\nAverage", "1°F")) +
+  scale_color_identity() +
+  scale_size_identity() +
+  labs(x=NULL, y=NULL, title="Hottest year on record (2014 in red)",
+       caption="Source: Bloomberg <https://www.bloomberg.com/graphics/2014-hottest-year-on-record/>") +
+  theme_ipsum_rc(grid="XY", axis="xy") +
+  theme(legend.position="none")
+```
+
+![](README_files/figure-markdown_github/unnamed-chunk-3-1.png)
 
 ### Test Results
 
@@ -113,7 +121,7 @@ library(testthat)
 date()
 ```
 
-    ## [1] "Sun Feb 19 07:49:12 2017"
+    ## [1] "Sun Feb 19 21:05:42 2017"
 
 ``` r
 test_dir("tests/")

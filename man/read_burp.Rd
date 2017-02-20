@@ -33,7 +33,7 @@ entire structure into a \code{HARtools} object.
 \examples{
 library(dplyr)
 
-system.file("extdata", "burp.xml", package="burrp") \%>\%
+system.file("extdata", "hottest_year.xml", package="burrp") \%>\%
   read_burp() \%>\%
   glimpse()
 }

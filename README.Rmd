@@ -12,7 +12,7 @@ Eventually there will likely be an `as_har()` function to turn the entire struct
 
 To use this package you either need to have Burp proxy export files handy, use the built-in example data file or [download Burp](https://portswigger.net/burp/) and capture some web traffic and export the data.
 
-The current Burp proxy example capture file is of a capture from the :orange: "news survey" and was used solely out of convenience (was making sure it actually POSTed formndata). It will be subbed out for something much less depressing at some point.
+The current Burp proxy example capture file is of a capture from the [Bloomberg Hottest Year on Record](https://www.bloomberg.com/graphics/2014-hottest-year-on-record/) scrollytelling datavis. It's a good example of how to use Burp to capture requests as you interactively work in a browser (you can get the JSON data behind the vis this way, too).
 
 The following functions are implemented:
 
@@ -24,27 +24,47 @@ The following functions are implemented:
 devtools::install_github("hrbrmstr/burrp")
 ```
 
-```{r message=FALSE, warning=FALSE, error=FALSE}
+```{r message=FALSE, warning=FALSE, error=FALSE, include=FALSE}
 options(width=120)
 ```
 
 ### Usage
 
-```{r message=FALSE, warning=FALSE, error=FALSE}
+```{r message=FALSE, warning=FALSE, error=FALSE, fig.height=6, fig.width=10}
+library(httr)
 library(burrp)
-library(dplyr)
+library(hrbrthemes) # github
+library(tidyverse)
 
 # current verison
 packageVersion("burrp")
 
-system.file("extdata", "burp.xml", package="burrp") %>%
+system.file("extdata", "hottest_year.xml", package="burrp") %>%
   read_burp() -> burp_df
 
 glimpse(burp_df)
 
-burp_df$response[[42]]
+burp_df$request[[3]]
 
-burp_df$request[[42]]
+burp_df$response[[3]]
+
+content(burp_df$response[[3]], simplifyDataFrame=TRUE) %>% 
+  unnest() %>% 
+  filter(key != "0") %>% 
+  mutate(key=factor(key, levels=as.character(1:12), labels=month.abb)) %>% 
+  mutate(color=ifelse(year=="2014", "#cb181d", "#b5b5b5")) %>% 
+  mutate(size=ifelse(year=="2014", 0.5, 0.15)) %>% 
+  ggplot(aes(key, value, group=year, color=color, size=size)) +
+  geom_hline(yintercept = 0, size=0.2) +
+  geom_line() +
+  scale_x_discrete(expand=c(0,0)) +
+  scale_y_continuous(breaks=c(-1, 0, 1), labels=c("-1°F", "20th Century\nAverage", "1°F")) +
+  scale_color_identity() +
+  scale_size_identity() +
+  labs(x=NULL, y=NULL, title="Hottest year on record (2014 in red)",
+       caption="Source: Bloomberg <https://www.bloomberg.com/graphics/2014-hottest-year-on-record/>") +
+  theme_ipsum_rc(grid="XY", axis="xy") +
+  theme(legend.position="none")
 ```
 
 ### Test Results
