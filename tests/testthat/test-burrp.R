@@ -1,6 +1,9 @@
 context("basic functionality")
 test_that("we can do something", {
 
-  #expect_that(some_function(), is_a("data.frame"))
+  system.file("extdata", "hottest_year.xml", package="burrp") %>%
+    read_burp() -> burp_df
+
+  expect_that(burp_df, is_a("data.frame"))
 
 })

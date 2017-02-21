@@ -7,10 +7,6 @@ r:
  - release
  - devel
 
-apt_packages:
-  - libv8-dev
-  - xclip
-
 env:
  global:
    - CRAN: http://cran.rstudio.com

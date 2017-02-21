@@ -1,7 +1,11 @@
 
+[![Travis-CI Build Status](https://travis-ci.org/hrbrmstr/burrp.svg?branch=master)](https://travis-ci.org/hrbrmstr/burrp)
+
 `burrp` : Tools to Import and Process [PortSwigger](https://portswigger.net/) 'Burp' Proxy Data
 
 The Burp Suite is a set of web application and security testing tools. Combined, they intercept, record and can even transform browser traffic.
+
+It is often necessary to use an intercepting proxy server to identify targets for web-scraping. The 'PortSwigger' 'Burp' proxy records web traffic from interactive use of a browser and provides mechanisms to archive this activity to an XML file for further processing. Tools are provides to import this archive file and work with the request and response objects in a similar manner as one would with results of verb calls from functions in the 'httr' package.
 
 For now, the solo function - `read_burp` - expects the `request` and `response` elements of a Burp XML export file to be base 64 encoded.
 
@@ -167,13 +171,13 @@ library(testthat)
 date()
 ```
 
-    ## [1] "Sun Feb 19 23:05:39 2017"
+    ## [1] "Mon Feb 20 22:56:59 2017"
 
 ``` r
 test_dir("tests/")
 ```
 
     ## testthat results ========================================================================================================
-    ## OK: 0 SKIPPED: 0 FAILED: 0
+    ## OK: 1 SKIPPED: 0 FAILED: 0
     ## 
     ## DONE ===================================================================================================================

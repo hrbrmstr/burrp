@@ -1,10 +1,13 @@
 ---
 output: rmarkdown::github_document
 ---
+[![Travis-CI Build Status](https://travis-ci.org/hrbrmstr/burrp.svg?branch=master)](https://travis-ci.org/hrbrmstr/burrp)
 
 `burrp` : Tools to Import and Process [PortSwigger](https://portswigger.net/) 'Burp' Proxy Data
 
 The Burp Suite is a set of web application and security testing tools. Combined, they intercept, record and can even transform browser traffic.
+
+It is often necessary to use an intercepting proxy server to identify targets for web-scraping. The 'PortSwigger' 'Burp' proxy records web traffic from interactive use of a browser and provides mechanisms to archive this activity to an XML file for further processing. Tools are provides to import this archive file and work with the request and response objects in a similar manner as one would with results of verb calls from functions in the 'httr' package.
 
 For now, the solo function - `read_burp` - expects the `request` and `response` elements of a Burp XML export file to be base 64 encoded.
 

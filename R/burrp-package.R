@@ -4,7 +4,7 @@
 #' @docType package
 #' @author Bob Rudis (bob@@rud.is)
 #' @import purrr xml2 httr anytime
-#' @importFrom dplyr mutate filter select group_by count left_join
+#' @importFrom dplyr mutate filter select group_by count left_join ungroup
 #' @importFrom openssl base64_decode
 #' @importFrom tibble as_tibble
 #' @importFrom stringi stri_split_fixed

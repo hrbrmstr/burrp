@@ -59,7 +59,9 @@ read_burp <- function(burp_file, convert_response=TRUE, convert_request=TRUE) {
 }
 
 #' @export
-summary.burrp <- function(x, ...) {
+summary.burrp <- function(object, ...) {
+
+  x <- object
 
   x <- left_join(x, status_codes_df)
 

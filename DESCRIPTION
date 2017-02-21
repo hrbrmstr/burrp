@@ -5,7 +5,13 @@ Version: 0.1.0
 Date: 2017-02-18
 Author: Bob Rudis (bob@rud.is)
 Maintainer: Bob Rudis <bob@rud.is>
-Description: Tools to Import and Process 'PortSwigger' 'Burp' Proxy Data
+Description: It is often necessary to use an intercepting proxy server
+    to identify targets for web-scraping. The 'PortSwigger' <https://portswigger.net/>
+    'Burp' proxy records web traffic from interactive use of a browser and provides
+    mechanisms to archive this activity to an XML file for further processing. Tools
+    are provides to import this archive file and work with the request and response
+    objects in a similar manner as one would with results of verb calls from functions
+    in the 'httr' package.
 URL: http://github.com/hrbrmstr/burrp
 BugReports: https://github.com/hrbrmstr/burrp/issues
 License: AGPL
