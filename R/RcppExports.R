@@ -9,6 +9,6 @@
 #' @return index in \code{buffer} or \code{-1} if not found
 #' @export
 find_sequence <- function(buffer, pattern) {
-    .Call('burrp_find_sequence', PACKAGE = 'burrp', buffer, pattern)
+    .Call('_burrp_find_sequence', PACKAGE = 'burrp', buffer, pattern)
 }
 

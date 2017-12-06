@@ -12,6 +12,8 @@
 #' @importFrom scales comma
 #' @importFrom stats setNames
 #' @importFrom Rcpp sourceCpp
+#' @importFrom shiny runApp runExample
+#' @import DT
 #' @useDynLib burrp
 NULL
 

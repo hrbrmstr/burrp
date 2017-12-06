@@ -24,7 +24,7 @@ a \code{tibble}
 }
 \description{
 For now, this function expects the \code{request} and \code{response}
-elements to be base 64 encoded.
+elements to be base64 encoded.
 }
 \details{
 Eventually there will likely be an \code{as_har()} function to turn the

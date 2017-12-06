@@ -32,6 +32,8 @@ Imports:
     stats,
     httr,
     xml2,
-    Rcpp
-RoxygenNote: 6.0.0
+    Rcpp,
+    shiny,
+    DT
+RoxygenNote: 6.0.1
 LinkingTo: Rcpp

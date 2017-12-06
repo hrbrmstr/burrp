@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // find_sequence
 int find_sequence(RawVector buffer, RawVector pattern);
-RcppExport SEXP burrp_find_sequence(SEXP bufferSEXP, SEXP patternSEXP) {
+RcppExport SEXP _burrp_find_sequence(SEXP bufferSEXP, SEXP patternSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -16,4 +16,14 @@ BEGIN_RCPP
     rcpp_result_gen = Rcpp::wrap(find_sequence(buffer, pattern));
     return rcpp_result_gen;
 END_RCPP
+}
+
+static const R_CallMethodDef CallEntries[] = {
+    {"_burrp_find_sequence", (DL_FUNC) &_burrp_find_sequence, 2},
+    {NULL, NULL, 0}
+};
+
+RcppExport void R_init_burrp(DllInfo *dll) {
+    R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
+    R_useDynamicSymbols(dll, FALSE);
 }
