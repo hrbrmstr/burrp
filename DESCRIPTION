@@ -1,8 +1,8 @@
 Package: burrp
 Type: Package
 Title: Tools to Import and Process 'PortSwigger' 'Burp' Proxy Data
-Version: 0.1.0
-Date: 2017-02-18
+Version: 0.1.1
+Date: 2021-04-15
 Author: Bob Rudis (bob@rud.is)
 Maintainer: Bob Rudis <bob@rud.is>
 Description: It is often necessary to use an intercepting proxy server
@@ -14,11 +14,12 @@ Description: It is often necessary to use an intercepting proxy server
     in the 'httr' package.
 URL: http://github.com/hrbrmstr/burrp
 BugReports: https://github.com/hrbrmstr/burrp/issues
-License: AGPL
+License: MIT + file LICENSE
 Suggests:
     testthat
+Encoding: UTF-8
 Depends:
-    R (>= 3.2.0)
+    R (>= 3.6.0)
 Imports:
     magrittr,
     anytime,
@@ -35,5 +36,5 @@ Imports:
     Rcpp,
     shiny,
     DT
-RoxygenNote: 6.0.1
+RoxygenNote: 7.1.1
 LinkingTo: Rcpp

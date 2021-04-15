@@ -1,3 +1,6 @@
+0.1.1
+* handles 0x00 in response bodies better
+
 0.1.0 
 
 * basic test

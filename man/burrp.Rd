@@ -3,11 +3,7 @@
 \docType{package}
 \name{burrp}
 \alias{burrp}
-\alias{burrp-package}
 \title{Tools to Import and Process 'PortSwigger' 'Burp' Proxy Data}
-\description{
-Tools to Import and Process 'PortSwigger' 'Burp' Proxy Data
-}
 \author{
 Bob Rudis (bob@rud.is)
 }

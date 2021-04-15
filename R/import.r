@@ -43,8 +43,8 @@ read_burp <- function(burp_file, convert_response=TRUE, convert_request=TRUE) {
       time = burp_time(time),
       request = purrr::map(request, base64_decode),
       response = purrr::map(response, base64_decode),
-      raw_request = purrr::map(request, rawToChar),
-      raw_response = purrr::map(response, rawToChar),
+      raw_request = purrr::map(request, ~rawToChar(.x[.x != as.raw(0x00)])),
+      raw_response = purrr::map(response, ~rawToChar(.x[.x != as.raw(0x00)])),
       responselength = as.numeric(responselength)
     ) -> burp_df
 

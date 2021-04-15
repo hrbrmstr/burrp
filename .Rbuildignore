@@ -6,3 +6,4 @@
 ^NOTES\.*Rmd$
 ^NOTES\.*html$
 ^README_files$
+^LICENSE\.md$
